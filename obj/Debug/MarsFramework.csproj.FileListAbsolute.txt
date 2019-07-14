@@ -84,3 +84,5 @@ C:\Users\harpr\OneDrive\Documents\MarsFramework\SkillsFramework\MarsFramework\ob
 C:\Users\harpr\OneDrive\Documents\MarsFramework\SkillsFramework\MarsFramework\obj\Debug\MarsFramework.csproj.CopyComplete
 C:\Users\harpr\OneDrive\Documents\MarsFramework\SkillsFramework\MarsFramework\obj\Debug\MarsFramework.dll
 C:\Users\harpr\OneDrive\Documents\MarsFramework\SkillsFramework\MarsFramework\obj\Debug\MarsFramework.pdb
+C:\Users\harpr\OneDrive\Documents\MarsFramework\SkillsFramework\MarsFramework\obj\Debug\Interop.AutoItX3Lib.dll
+C:\Users\harpr\OneDrive\Documents\MarsFramework\SkillsFramework\MarsFramework\obj\Debug\MarsFramework.csproj.ResolveComReference.cache

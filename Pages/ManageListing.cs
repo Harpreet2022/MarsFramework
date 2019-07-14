@@ -1,4 +1,5 @@
 ﻿using MarsFramework.Global;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.PageObjects;
@@ -10,7 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using static MarsFramework.Global.GlobalDefinitions;
-using static NUnit.Core.NUnitFramework;
+
 
 namespace MarsFramework.Pages
 {
@@ -25,7 +26,7 @@ namespace MarsFramework.Pages
         #region Initialise web element
         //Click on the Manage Listings Button
 
-        [FindsBy(How = How.XPath, Using = "//a[ @href='/Home/ListingManagement']")]
+        [FindsBy(How = How.XPath, Using = "//a[@class='item' and @href='/Home/ListingManagement']")]
         private IWebElement ManageListingbtn { get; set; }
 
         //Click on Eye Icon
@@ -46,7 +47,7 @@ namespace MarsFramework.Pages
         private IWebElement TitleName { get; set; }
 
         //Verify Delete listing
-        [FindsBy(How = How.XPath, Using = "(//i[@class='remove icon'])[1]")]
+        [FindsBy(How = How.XPath, Using = "//i[@class='remove icon']")]
         private IWebElement DeleteIcon { get; set; }
 
 
@@ -66,7 +67,7 @@ namespace MarsFramework.Pages
 
         #endregion
 
-        internal void Listing()
+        public void Listing()
         {
             //extent Reports
             Base.test = Base.extent.StartTest("View Manage Listings");
@@ -92,17 +93,45 @@ namespace MarsFramework.Pages
 
             //delete  Skills 
             Thread.Sleep(1000);
-            DeleteIcon.Click();
+            Actions action = new Actions(Global.GlobalDefinitions.driver);
+            action.MoveToElement(DeleteIcon).Build().Perform();
 
-            //Click on Yes button
-            Thread.Sleep(1000);
-           GlobalDefinitions.driver.SwitchTo().Alert().Accept();
-            
+            String before_Xpath = "//tr[";
+            String after_Xpath = "]/td[3]";
+            for (int i = 1; i <= 4; i++)
+            {
+                String name = Global.GlobalDefinitions.driver.FindElement(By.XPath(before_Xpath + i + after_Xpath)).Text;
+                Console.WriteLine(name);
+                if (name.Equals(ExcelLib.ReadData(2, "Title")))
+                {
+                    Global.GlobalDefinitions.driver.FindElement(By.XPath("//tr[" + i + " ]//td[8]//i[3]")).Click();
+                    YesBtn.Click();
+                    Console.WriteLine("listing has been deleted successfully");
+                }
+            }
+
+
+            //tr[2]//td[8]//i[3]
+            //tr[3]//td[8]//i[3]
+
+
+
+
 
 
 
         }
     }
 }
+
+
+
+
+
+            
+        
+    
+
+
     
 

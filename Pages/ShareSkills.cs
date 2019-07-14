@@ -3,11 +3,13 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 using RelevantCodes.ExtentReports;
 using System;
+using AutoItX3Lib;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
 
 namespace MarsFramework.Pages
 {
@@ -39,7 +41,7 @@ namespace MarsFramework.Pages
 
         // Select Category
 
-        [FindsBy(How = How.XPath, Using = "//select[@name='categoryId' and @class='ui fluid dropdown']")]
+        [FindsBy(How = How.XPath, Using = "//select[contains(@name,'categoryId')] ")]
         public IWebElement Category { get; set; }
 
         // Select Programming & Tech
@@ -79,7 +81,7 @@ namespace MarsFramework.Pages
         public IWebElement LocationTypeOnline { get; set; }
 
         //Avilable Days -Start Date
-        [FindsBy(How = How.XPath, Using = "(//input[contains(@max,'9999-12-31')])[1]")]
+        [FindsBy(How = How.XPath, Using = "//input[@placeholder='Start date' and @max='9999-12-31']")]
         public IWebElement StartDate { get; set; }
 
         //Avilable Days -End Date
@@ -91,11 +93,11 @@ namespace MarsFramework.Pages
         public IWebElement SelectDays { get; set; }
 
         //Start Time
-        [FindsBy(How = How.XPath, Using = "//input[@name='StartTime' and @index='0' ]")]
+        [FindsBy(How = How.XPath, Using = "(//input[@name='StartTime' and @type='time' ])[1]")]
         public IWebElement StartTime { get; set; }
 
         //End Time
-        [FindsBy(How = How.XPath, Using = "//input[@name='EndTime' and @index='0' ]")]
+        [FindsBy(How = How.XPath, Using = "(//input[@name='EndTime' and @type='time' ])[1]")]
         public IWebElement EndTime { get; set; }
 
         //Skill Trade - Skill Exchange
@@ -216,15 +218,25 @@ namespace MarsFramework.Pages
 
 
                 //Select the date
-                //StartDate.SendKeys(Keys.Backspace);
                 Thread.Sleep(1000);
-                //StartDate.SendKeys(Global.GlobalDefinitions.ExcelLib.ReadData(2, "Start Date"));
-                //StartDate.SendKeys(Keys.Tab);
-                StartDate.SendKeys("25-06-2019");
+                StartDate.SendKeys(Keys.Delete);
+                Thread.Sleep(2000);
+                
+                StartDate.SendKeys(Keys.Backspace);
+                Thread.Sleep(1000);
+                StartDate.SendKeys(Global.GlobalDefinitions.ExcelLib.ReadData(2, "Start Date"));
+                Console.WriteLine("Start date is : " + GlobalDefinitions.ExcelLib.ReadData(2, "Start Date"));
+                
+                //StartDate.SendKeys("25-07-2019");
 
-                //Select the end Date
-                EndDate.SendKeys("25-06-2019");
-
+                ////Select the end Date
+                //EndDate.SendKeys("21-08-2019");
+                Thread.Sleep(1000);
+                EndDate.SendKeys(Keys.Delete);
+                
+                EndDate.SendKeys(Global.GlobalDefinitions.ExcelLib.ReadData(2, "End Date"));
+                Thread.Sleep(2000);
+                Console.WriteLine("End date is : " + GlobalDefinitions.ExcelLib.ReadData(2, "End Date"));
                 //Select the Days available
 
 
@@ -234,10 +246,15 @@ namespace MarsFramework.Pages
                 //Select starttime
                 Thread.Sleep(1000);
                 StartTime.SendKeys(Global.GlobalDefinitions.ExcelLib.ReadData(2, "Start Time"));
+                Thread.Sleep(2000);
+                Console.WriteLine("Start Time is : " + GlobalDefinitions.ExcelLib.ReadData(2, "Start Time"));
+                //StartTime.SendKeys("12:00PM");
 
                 //Select EndTime
                 Thread.Sleep(1000);
                 EndTime.SendKeys(Global.GlobalDefinitions.ExcelLib.ReadData(2, "End Time"));
+                Console.WriteLine("End Time is : " + GlobalDefinitions.ExcelLib.ReadData(2, "End Time"));
+                //EndTime.SendKeys("3:00PM");
 
                 //Select Skill Trade
                 Credit.Click();
@@ -263,6 +280,24 @@ namespace MarsFramework.Pages
                     //Select the stats
                     // StatusActive.Click();
                     //Thread.Sleep(500);
+
+                    //select Work Sample
+                    Sample.Click();
+
+                    AutoItX3 fileupload = new AutoItX3();
+                    fileupload.WinActivate("Open");
+                    Thread.Sleep(3000);
+                    fileupload.Send(@"C:\Users\harpr\OneDrive\Documents\Testing.jpg");
+                    Thread.Sleep(1000);
+                    fileupload.Send("{ENTER}");
+                  
+                        
+                    //Thread.Sleep(4000);
+
+
+
+                    Console.WriteLine("File has been uploaded successfully");
+
                     if (GlobalDefinitions.ExcelLib.ReadData(2, "Status") == "Active")
                     {
                         Active.Click();

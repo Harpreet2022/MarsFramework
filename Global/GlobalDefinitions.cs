@@ -105,7 +105,7 @@ namespace MarsFramework.Global
                 catch (Exception e)
                 {
                     //Added by Kumar
-                    Console.WriteLine("Exception occurred in ExcelLib Class ReadData Method!" + Environment.NewLine + e.Message.ToString());
+                    //Console.WriteLine("Exception occurred in ExcelLib Class ReadData Method!" + Environment.NewLine + e.Message.ToString());
                     return null;
                 }
             }
